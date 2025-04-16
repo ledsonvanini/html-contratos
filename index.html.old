@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="container">
+        <h5>Inserir Nova Fatura</h5>
+
+        <form id="formularioFatura">
+          <div class="row form-row">
+            <div class="input-field col s6">
+              <input type="date" id="dataEntrada" name="dataEntrada" required />
+              <label for="dataEntrada" class="active">Data Entrada</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="text" id="protocolo" name="protocolo" required />
+              <label for="protocolo">Protocolo (apenas números)</label>
+              <small class="helper-text">Formato: XX.XXX.XXX-X</small>
+            </div>
+          </div>
+
+          <div class="row form-row">
+            <div class="input-field col s6">
+              <input type="number" id="fatura" name="fatura" required />
+              <label for="fatura">Fatura</label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                id="contrato"
+                name="contrato"
+                required
+                placeholder="Ex: 7023/2022"
+              />
+              <label for="contrato">Contrato (apenas número/ano)</label>
+              <small class="helper-text"
+                >Será formatado como: CA XXXX/202X - GMS</small
+              >
+            </div>
+          </div>
+
+          <div class="row form-row">
+            <div class="input-field col s12">
+              <input type="text" id="obra" name="obra" required readonly />
+              <label for="obra" class="active"
+                >Obra (preenchido automaticamente)</label
+              >
+            </div>
+          </div>
+
+          <!-- Nova seção para empenhos relacionados ao contrato -->
+          <div
+            id="empenhos-relacionados"
+            class="row form-row empenhos-section hide"
+          >
+            <div class="col s12">
+              <div class="empenhos-header">
+                <h6 class="empenhos-title">
+                  Empenhos disponíveis para este contrato:
+                </h6>
+                <div id="empenhos-counter" class="chip">0 empenhos</div>
+              </div>
+
+              <div id="empenhos-loading" class="preloader-container">
+                <div class="preloader-wrapper small active">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="empenhos-container" class="empenhos-container">
+                <!-- Os empenhos serão adicionados aqui dinamicamente -->
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-row">
+            <div class="input-field col s4">
+              <input type="text" id="medicao" name="medicao" required />
+              <label for="medicao">Medição</label>
+            </div>
+            <div class="input-field col s4">
+              <input type="text" id="valor" name="valor" required />
+              <label for="valor">Valor (R$)</label>
+            </div>
+            <div class="input-field col s4">
+              <input type="text" id="empenho" name="empenho" required />
+              <label for="empenho">Empenho</label>
+              <small class="helper-text"
+                >Selecione acima ou digite o número</small
+              >
+            </div>
+          </div>
+
+          <div class="row form-row">
+            <div class="input-field col s6">
+              <select id="tipo" name="tipo" required>
+                <option value="" disabled selected>Selecione</option>
+                <!-- Opções serão carregadas via JavaScript -->
+              </select>
+              <label for="tipo">Tipo</label>
+            </div>
+            <div class="input-field col s6">
+              <select id="acaoOrcamentaria" name="acaoOrcamentaria" required>
+                <option value="" disabled selected>Selecione</option>
+                <!-- Opções serão carregadas via JavaScript -->
+              </select>
+              <label for="acaoOrcamentaria">Ação Orçamentária</label>
+            </div>
+          </div>
+
+          <div class="row form-row">
+            <div class="input-field col s6">
+              <select id="fonte" name="fonte" required>
+                <option value="" disabled selected>Selecione</option>
+                <!-- Opções serão carregadas via JavaScript -->
+              </select>
+              <label for="fonte">Fonte</label>
+            </div>
+            <div class="input-field col s6">
+              <select id="elementoDespesa" name="elementoDespesa" required>
+                <option value="" disabled selected>Selecione</option>
+                <!-- Opções serão carregadas via JavaScript -->
+              </select>
+              <label for="elementoDespesa">Elemento de Despesa</label>
+            </div>
+          </div>
+
+          <div id="fixed-actions" class="fixed-buttons">
+            <button
+              type="button"
+              id="btnCancelar"
+              class="btn btn-cancelar waves-effect waves-light"
+            >
+              <i class="material-icons left">cancel</i>Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-inserir waves-effect waves-light"
+            >
+              <i class="material-icons left">add</i>Inserir Fatura
+            </button>
+          </div>
+        </form>
+
+        <div id="statusMensagem" class="status-message hide"></div>
+      </div>
+    </div>
+  </body>
+</html>
