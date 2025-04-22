@@ -4,67 +4,274 @@
     <base target="_top" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="flex flex-col flex-full justify-center">
-    <div class="flex flex-full px-4 bg-gray-200 justify-center h-dvw">
-      <div class="w-full">
-        <h3 class="text-2xl py-4 font-semibold">Inserir Dados Contrato</h3>
-        <form id="formularioFatura " class="w-full flex px-10 bg-grey-100">
-          <div class="flex gap-4">
-            <div class="flex flex-col border-x-slate-300">
-              <label for="num_sesp" class="active">Nº SESP</label>
-              <input
-                class="border-x-slate-300 bg-white p-2 border border-gray-300 outline-0 rounded-sm shadow-sm"
-                type="text"
-                id="num_sesp"
-                name="num_sesp"
-                required
-              />
+  <style>
+    :root {
+      --blue-01: #526299;
+      --blue-02: #334377;
+      --red-01: #e1282b;
+      --red-02: #b92023;
+      --green-01: #17aa37;
+      --yellow-01: #BAB03D;
+      --yellow-02: #968c30;
+    }
+    input,
+    select {
+      width: 310px;
+      border: 1px solid rgb(218, 218, 218);
+      box-shadow: 5px 5px 15px rgb(223, 223, 223);
+      padding: 0.7rem;
+      background-color: white;
+      border-radius: 5px;
+      outline: none;
+      font-size: .8rem;
+    }
+    input::placeholder, textarea::placeholder {
+      color: gray;
+      opacity: 0.5;
+    }
+    input[type=date] {
+      font-size: .8rem;
+      width: 150px;
+      border: 1px solid rgb(218, 218, 218);
+      box-shadow: 5px 5px 15px rgb(223, 223, 223);
+      padding: 0.7rem;
+      background-color: white;
+      border-radius: 5px;
+      outline: none;
+    }
+    textarea {
+      resize: none;
+      overflow: auto;
+      outline: none;
+      background-color: white;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid rgb(218, 218, 218);
+      box-shadow: 5px 5px 15px rgb(223, 223, 223);
+    }
+    .label-input {
+      font-size: 0.8rem;
+      color: var(--blue-02);
+      font-weight: 600;
+      display: block;
+    }
+
+    .button-send {
+      background-color: var(--blue-01);
+      padding: 0.7rem 3.2rem;
+      border-radius: 5px;
+      border: 1px solid rgb(218, 218, 218);
+      cursor: pointer;
+      color: white;
+    }
+
+    .button-cancel {
+      background-color: var(--red-01);
+      padding: 0.7rem 3.2rem;
+      border-radius: 5px;
+      border: 1px solid rgb(218, 218, 218);
+      cursor: pointer;
+      color: white;
+    }
+    .button-limpar {
+      background-color: var(--yellow-01);
+      padding: 0.7rem 3.2rem;
+      border-radius: 5px;
+      border: 1px solid rgb(218, 218, 218);
+      cursor: pointer;
+      color: white;
+    }
+
+    .button-limpar:hover {
+      background-color: var(--yellow-02);
+    }
+    .button-cancel:hover {
+      background-color: var(--red-02);
+    }
+    .button-send:hover {
+      background-color: var(--blue-02);
+    }
+  </style>
+  <body class="flex justify-center">
+    <div class="flex flex-col py-4 gap-1">      
+      <div class="flex flex-col  justify-center border-1 border-gray-100 bg-gray-100 rounded-xl">
+        <form
+          id="formularioFatura "
+          class="rounded-xl p-8 flex justify-center gap-2"
+        >
+          <!-- FORM COL INPUT 1 -->
+          <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="num_sesp" class="active label-input">Nº SESP</label>
+              <input type="text" id="num_sesp" name="num_sesp" placeholder="xxxx/2025" required />
             </div>
-            <div class="flex flex-col border-x-slate-300">
-              <label for="num_gms" class="active">Nº GMS</label>
-              <input
-                class="border-x-slate-300 bg-white p-2 border border-gray-300 outline-0 rounded-sm shadow-sm"
-                type="text"
-                id="num_gms"
-                name="num_gms"
-                required
-              />
+
+            <div class="flex flex-col gap-1">
+              <label for="num_gms" class="active label-input">Nº GMS</label>
+              <input type="text" id="num_gms" name="num_gms" placeholder="xxxx/2025" required />
             </div>
-            <div class="flex flex-col border-x-slate-300">
-              <label for="e_protocolo" class="active">e-PROTOCOLO</label>
-              <input
-                class="border-x-slate-300 bg-white p-2 border border-gray-300 outline-0 rounded-sm shadow-sm"
-                type="text"
-                id="e_protocolo"
-                name="e_protocolo"
-                required
-              />
-            </div>
-            <div class="flex flex-col border-x-slate-300">
-              <label for="num_licitacao" class="active">Nº LICITAÇÃO</label>
-              <input
-                class="border-x-slate-300 bg-white p-2 border border-gray-300 outline-0 rounded-sm shadow-sm"
-                type="text"
-                id="num_licitacao"
-                name="num_licitacao"
-                required
-              />
-            </div>
-            <div class="flex flex-col border-x-slate-300">
-              <label for="mod_licitacao" class="active">MODAL.LICITAÇÃO</label>
-              <select
-                class="border-x-slate-300 bg-white p-2 border border-gray-300 outline-0 rounded-sm shadow-sm"
-                id="tipo"
-                name="tipo"
-                required
+
+            <div class="flex flex-col gap-1">
+              <label for="e_protocolo" class="active label-input"
+                >e-PROTOCOLO</label
               >
-                <option value="" disabled selected>Selecione</option>
-                <!-- Opções serão carregadas via JavaScript -->
+              <input type="text" id="e_protocolo" name="e_protocolo" placeholder="xx.xxx.xxx-x" required />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="licitacao" class="active label-input"
+                >Nº. LICITAÇÃO/DISPENSA</label
+              >
+              <input type="text" id="licitacao" name="licitacao"  placeholder="xxxx/2025" required />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="opt_licitacao" class="active label-input"
+                >MOD.LICITAÇÃO</label
+              >
+              <select id="opt_licitacao">
+                <option>ATA FEDERAL</option>
+                <option>ATA ESTADUAL</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="opt_palavra-chave" class="active label-input"
+                >PALAVRA-CHAVE</label
+              >
+              <select id="opt_palavra-chave">
+                <option>AQUISIÇÃO</option>
+                <option>SERVIÇOS</option>
               </select>
             </div>
           </div>
+
+          <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="opt_unidade" class="active label-input">UNIDADE</label>
+              <select id="opt_unidade ">
+                <option>PMPR</option>
+                <option>DEPPEN</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="opt_subunidade" class="active label-input"
+                >SUB-UNIDADE</label
+              >
+              <select id="opt_subunidade">
+                <option>DA</option>
+                <option>DALF</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="contratada" class="active label-input"
+                >CONTRATADA</label
+              >
+              <input type="text" id="contratada" name="contratada" placeholder="Razão Social Ltda" required />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="valor" class="active label-input"
+                >VALOR / R$</label
+              >
+              <input type="number" id="valor" name="valor" placeholder="Apenas números" required />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="obj_contratacao" class="active label-input"
+                >OBJETO CONTRATAÇÃO</label
+              >
+              <textarea
+                id="obj_contratacao"
+                name="obj_contratacao"
+                rows=4"
+                cols="30"
+                required 
+                placeholder="Contratação de serviços continuados..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="flex flex-col p-4 gap-4">      
+
+            <div class="flex flex-col gap-1">
+              <label for="nota_reserva" class="active label-input"
+                >NOTA RESERVA</label
+              >
+              <input type="text" id="nota_reserva" name="nota_reserva" required />
+            </div>
+
+            <div class="date-input flex gap-2 ">
+              <div class="flex flex-col gap-1">
+                <label for="vigencia_inicio" class="active label-input"
+                  >VIGÊNCIA / INÍCIO</label
+                >
+                <input type="date" id="vigencia_inicio" name="vigencia_inicio" required />
+              </div>           
+              <div class="flex flex-col gap-1">
+                <label for="vigencia_fim" class="active label-input"
+                  >VIGÊNCIA / FIM</label
+                >
+                <input type="date" id="vigencia_fim" name="vigencia_fim" required />
+              </div>           
+              
+            </div>
+
+            <div class="flex flex-col gap-1">             
+              <label for="opt_responsavel" class="active label-input"
+                >RESPONSÁVEL</label
+              >
+              <select id="opt_responsavel">
+                <option>LUCAS</option>
+                <option>MARIA</option>
+              </select>
+             
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="opt_pncp" class="active label-input"
+                >PNCP</label
+              >
+              <select id="opt_pncp">
+                <option>SIM</option>
+                <option>NÃO</option>
+                <option>EDIÇÃO</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="area-dotacao" class="active label-input"
+                >DOTAÇÃO ORÇAMENTÁRIA</label
+              >
+              <textarea
+                id="area-dotacao"
+                name="area-dotacao"
+                rows=4"
+                cols="30"
+                required
+                placeholder="Ações do comando geral – FUNESP"
+              ></textarea>
+          
+          </div>
+          </div>
         </form>
-        <div id="statusMensagem" class="status-message hide"></div>
+      </div>
+
+      <!-- BOTÕES RODAPÉ -->
+      <div class="flex justify-center w-full bg-[rgba(0,0,0,.02)] border-1 border-gray-100 p-2 rounded-xl">
+        <div class="flex flex-col gap-3 p-2 text-center">
+          <div id="statusMensagem" class="status-message hide"></div>
+          <div class="flex mx-10 gap-4">
+            <button type="button" class="button-limpar" id="btn-limpar">
+              Limpar
+            </button>
+            <button type="button" class="button-cancel" id="btn-cancelar">
+              Cancelar
+            </button>
+            <button class="button-send" id="btn-enviar">
+              Enviar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
