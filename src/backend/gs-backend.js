@@ -41,10 +41,12 @@ function salvarDadosNaPlanilha(dados) {
     const planilha = SpreadsheetApp.getActiveSpreadsheet();
     const aba = planilha.getSheetByName('Contratos-2025');
 
+    aba.getRange('J2:J').setNumberFormat('R$ #,##0.00');
+
     if (!aba) {
       SpreadsheetApp.getUi().alert('⚠ Aba "Contratos-2025" não encontrada!');
       throw new Error('⚠ Aba "Contratos-2025" não encontrada!');
-    }    
+    }
 
     // Obtém o número de linhas e colunas com dados
     const ultimaLinha = aba.getLastRow();
@@ -57,45 +59,45 @@ function salvarDadosNaPlanilha(dados) {
     // Montar a linha para inserção
     // const linhaParaInserir = cabecalhos.map(cabecalho => dados[cabecalho] || ''); // Se não existir, coloca vazio
     const linhaParaInserir = [
-        dados.num_sesp || '',
-        dados.num_gms || '',
-        dados.e_protocolo || '',
-        dados.licitacao || '',
-        dados.opt_modal_licitacao || '',
-        dados.opt_palavra_chave || '',
-        dados.opt_unidade || '',
-        dados.opt_subunidade || '',    
-        dados.contratada || ''    ,
-        dados.valor || ''    ,
-        dados.obj_contratacao || ''    ,
-        dados.opt_vigencia_mes || ''    ,
-        dados.opt_vigencia_ano || ''    ,
-        dados.vigencia_inicio || ''    ,
-        dados.vigencia_fim || ''    ,
-        dados.data_envio || ''    ,
-        dados.observacao || ''    ,
-        dados.opt_responsavel || ''    ,
-        dados.nota_reserva || ''    ,
-        dados.opt_pncp || ''    ,
-   
-  ];
+      dados.num_sesp || '',
+      dados.num_gms || '',
+      dados.e_protocolo || '',
+      dados.licitacao || '',
+      dados.opt_modal_licitacao || '',
+      dados.opt_palavra_chave || '',
+      dados.opt_unidade || '',
+      dados.opt_subunidade || '',
+      dados.contratada || '',
+      dados.valor || '',
+      dados.obj_contratacao || '' ,
+      dados.opt_vigencia_mes || ' - ' ,
+      dados.opt_vigencia_ano || ' - ' ,
+      dados.vigencia_inicio || '',
+      dados.vigencia_fim || '',
+      dados.data_envio || '',
+      dados.observacao || '',
+      dados.opt_responsavel || '',
+      dados.nota_reserva || '',
+      dados.opt_pncp || '',
 
-    // Inserir a linha
-    // aba.getRange(novaLinha, 1, 1, linhaParaInserir.length).setValues([linhaParaInserir]);
+    ]
+      
+    // Inserir a linha   
     aba.getRange(novaLinha, 1, 1, linhaParaInserir.length).setValues([linhaParaInserir]);
+   
 
     // Retorna uma mensagem de sucesso que será exibida em popup
     SpreadsheetApp.getUi().alert("✅ Contrato salvo com sucesso!")
     return '✅ Contrato salvo com sucesso!';
 
-   
+
   } catch (erro) {
     return {
       sucesso: false,
       mensagem: "Erro ao inserir dados: " + erro.toString()
     };
   }
-  
+
 }
 // console.log(salvarDadosNaPlanilha({
 //   "num_sesp" : "1a3d21",

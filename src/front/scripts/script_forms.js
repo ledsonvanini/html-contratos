@@ -38,11 +38,11 @@ function salvarContrato() {
       opt_subunidade : forceTextUpperCase(document.getElementById('opt_subunidade')?.value),
       opt_subunidade : forceTextUpperCase(document.getElementById('opt_subunidade')?.value),
       opt_subunidade : forceTextUpperCase(document.getElementById('opt_subunidade')?.value),
-      opt_subunidade : forceTextUpperCase(document.getElementById('opt_subunidade')?.value),
-      valor : currencyNumberFormat(document.getElementById('valor')?.value),
-
-      opt_vigencia_mes : forceTextUpperCase(document.getElementById('opt_vigencia_mes')?.value),    
-      opt_vigencia_ano : forceTextUpperCase(document.getElementById('opt_vigencia_ano')?.value),    
+      opt_subunidade : forceTextUpperCase(document.getElementById('opt_subunidade')?.value),      
+      
+      opt_vigencia_mes : forceTextUpperCase(document.getElementById('opt_vigencia_mes')?.value),
+      opt_vigencia_ano : forceTextUpperCase(document.getElementById('opt_vigencia_ano')?.value),
+       
       vigencia_inicio : forceTextUpperCase(document.getElementById('vigencia_inicio')?.value),    
       vigencia_fim : forceTextUpperCase(document.getElementById('vigencia_fim')?.value),    
       data_envio : forceTextUpperCase(document.getElementById('data_envio')?.value),      
@@ -51,12 +51,12 @@ function salvarContrato() {
 
     };
 
+   
   for (const [key, value] of formData.entries()) {
-    
+  
     dados[key] = forceTextUpperCase(value);
 
-  }
-    
+  }   
 
  
  console.log('Dados capturados:', dados);
