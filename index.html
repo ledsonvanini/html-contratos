@@ -3,135 +3,226 @@
   <head>
     <base target="_top" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://web.celepar.pr.gov.br/drupal/images/logo_parana_400x173.png"
+    />
+
+    <style>
+      :root {
+        --blue-00: #6379be;
+        --blue-01: #526299;
+        --blue-02: #334377;
+        --red-01: #e1282b;
+        --red-02: #b92023;
+        --green-01: #17aa37;
+        --yellow-01: #bab03d;
+        --yellow-02: #968c30;
+      }
+
+      .logo {
+        width: 80px;
+        aspect-ratio: 1;
+        border-radius: 1rem;
+        padding: 0.2rem;
+        margin: 0;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        font-size: 0.8rem;
+        border: 1px solid rgb(218, 218, 218);
+        box-shadow: 5px 5px 15px rgb(223, 223, 223);
+        padding: 0.7rem;
+        background-color: white;
+        border-radius: 5px;
+        outline: none;
+      }
+
+      .button {
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        background-color: var(--blue-00);
+        padding: 0.5rem 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+      }
+
+      .button > input:hover {
+        cursor: pointer;
+        background-color: var(--blue-02);
+      }
+
+      .button:hover {
+        cursor: pointer;
+        color: white;
+        background-color: var(--blue-02);
+      }
+
+      .btn-menu {
+        cursor: pointer;
+        border-radius: 0.8rem;
+      }
+
+      .form-top-menu {
+        border-radius: 1rem;
+        background-color: var(--blue-01);
+        padding-right: 1rem;
+        cursor: pointer;
+        color: white;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .btn-menu:hover {
+        transform: scale(1.03);
+      }
+
+      select {
+        width: 310px;
+        border: 1px solid rgb(218, 218, 218);
+        box-shadow: 5px 5px 15px rgb(223, 223, 223);
+        padding: 0.9rem;
+        background-color: white;
+        border-radius: 5px;
+        outline: none;
+        font-size: 0.8rem;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: gray;
+        opacity: 0.5;
+      }
+
+      input[type="date"] {
+        font-size: 0.8rem;
+        width: 150px;
+        border: 1px solid rgb(218, 218, 218);
+        box-shadow: 5px 5px 15px rgb(223, 223, 223);
+        padding: 0.7rem;
+        background-color: white;
+        border-radius: 5px;
+        outline: none;
+      }
+
+      textarea {
+        resize: none;
+        overflow: auto;
+        outline: none;
+        background-color: white;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid rgb(218, 218, 218);
+        box-shadow: 5px 5px 15px rgb(223, 223, 223);
+      }
+
+      .label-input {
+        font-size: 0.8rem;
+        color: var(--blue-02);
+        font-weight: 600;
+        display: block;
+      }
+    </style>
   </head>
-  <style>
-    :root {
-      --blue-01: #526299;
-      --blue-02: #334377;
-      --red-01: #e1282b;
-      --red-02: #b92023;
-      --green-01: #17aa37;
-      --yellow-01: #BAB03D;
-      --yellow-02: #968c30;
-    }
-    input,
-    select {
-      width: 310px;
-      border: 1px solid rgb(218, 218, 218);
-      box-shadow: 5px 5px 15px rgb(223, 223, 223);
-      padding: 0.7rem;
-      background-color: white;
-      border-radius: 5px;
-      outline: none;
-      font-size: .8rem;
-    }
-    input::placeholder, textarea::placeholder {
-      color: gray;
-      opacity: 0.5;
-    }
-    input[type=date] {
-      font-size: .8rem;
-      width: 150px;
-      border: 1px solid rgb(218, 218, 218);
-      box-shadow: 5px 5px 15px rgb(223, 223, 223);
-      padding: 0.7rem;
-      background-color: white;
-      border-radius: 5px;
-      outline: none;
-    }
-    textarea {
-      resize: none;
-      overflow: auto;
-      outline: none;
-      background-color: white;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid rgb(218, 218, 218);
-      box-shadow: 5px 5px 15px rgb(223, 223, 223);
-    }
-    .label-input {
-      font-size: 0.8rem;
-      color: var(--blue-02);
-      font-weight: 600;
-      display: block;
-    }
-
-    .button-send {
-      background-color: var(--blue-01);
-      padding: 0.7rem 3.2rem;
-      border-radius: 5px;
-      border: 1px solid rgb(218, 218, 218);
-      cursor: pointer;
-      color: white;
-    }
-
-    .button-cancel {
-      background-color: var(--red-01);
-      padding: 0.7rem 3.2rem;
-      border-radius: 5px;
-      border: 1px solid rgb(218, 218, 218);
-      cursor: pointer;
-      color: white;
-    }
-    .button-limpar {
-      background-color: var(--yellow-01);
-      padding: 0.7rem 3.2rem;
-      border-radius: 5px;
-      border: 1px solid rgb(218, 218, 218);
-      cursor: pointer;
-      color: white;
-    }
-
-    .button-limpar:hover {
-      background-color: var(--yellow-02);
-    }
-    .button-cancel:hover {
-      background-color: var(--red-02);
-    }
-    .button-send:hover {
-      background-color: var(--blue-02);
-    }
-  </style>
   <body class="flex justify-center">
-    <div class="flex flex-col py-4 gap-1">      
-      <div class="flex flex-col  justify-center border-1 border-gray-100 bg-gray-100 rounded-xl">
+    <div class="flex flex-col py-2 gap-1">
+      <div class="form-top-menu flex w-full items-center justify-between">
+        <img
+          class="logo"
+          src="https://www.escola.pc.pr.gov.br/sites/espc/arquivos_restritos/files/imagem/2021-04/607f50874a593-sesp.jpg"
+          alt="Logo Sesp"
+        />
+        <button
+          type="button"
+          id="btn_back_menu"
+          class="flex px-1 btn-menu flex justify-center items-center gap-3"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+            />
+          </svg>
+          Voltar ao Menu
+        </button>
+      </div>
+
+      <div
+        class="flex flex-col p-0 justify-center border-1 border-gray-100 bg-gray-100 rounded-xl"
+      >
         <form
-          id="formularioFatura "
-          class="rounded-xl p-8 flex justify-center gap-2"
+          id="form_contratos"
+          class="rounded-xl p-2 flex justify-center gap-2"
         >
           <!-- FORM COL INPUT 1 -->
           <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
             <div class="flex flex-col gap-1">
               <label for="num_sesp" class="active label-input">Nº SESP</label>
-              <input type="text" id="num_sesp" name="num_sesp" placeholder="xxxx/2025" required />
+              <input
+                type="text"
+                id="num_sesp"
+                name="num_sesp"
+                placeholder="xxxx/2025"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-1">
               <label for="num_gms" class="active label-input">Nº GMS</label>
-              <input type="text" id="num_gms" name="num_gms" placeholder="xxxx/2025" required />
+              <input
+                type="text"
+                id="num_gms"
+                name="num_gms"
+                placeholder="xxxx/2025"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-1">
               <label for="e_protocolo" class="active label-input"
                 >e-PROTOCOLO</label
               >
-              <input type="text" id="e_protocolo" name="e_protocolo" placeholder="xx.xxx.xxx-x" required />
+              <input
+                type="text"
+                id="e_protocolo"
+                name="e_protocolo"
+                placeholder="xx.xxx.xxx-x"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-1">
               <label for="licitacao" class="active label-input"
                 >Nº. LICITAÇÃO/DISPENSA</label
               >
-              <input type="text" id="licitacao" name="licitacao"  placeholder="xxxx/2025" required />
+              <input
+                type="text"
+                id="licitacao"
+                name="licitacao"
+                placeholder="xxxx/2025"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-1">
-              <label for="opt_licitacao" class="active label-input"
+              <label for="opt_modal_licitacao" class="active label-input"
                 >MOD.LICITAÇÃO</label
               >
-              <select id="opt_licitacao">
-                <option>ATA FEDERAL</option>
-                <option>ATA ESTADUAL</option>
+              <select id="opt_modal_licitacao">
+                <option>Carregando dados...</option>
               </select>
             </div>
 
@@ -139,19 +230,19 @@
               <label for="opt_palavra-chave" class="active label-input"
                 >PALAVRA-CHAVE</label
               >
-              <select id="opt_palavra-chave">
-                <option>AQUISIÇÃO</option>
-                <option>SERVIÇOS</option>
+              <select id="opt_palavra_chave">
+                <option>Carregando dados...</option>
               </select>
             </div>
           </div>
 
           <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
             <div class="flex flex-col gap-1">
-              <label for="opt_unidade" class="active label-input">UNIDADE</label>
-              <select id="opt_unidade ">
-                <option>PMPR</option>
-                <option>DEPPEN</option>
+              <label for="opt_unidade" class="active label-input"
+                >UNIDADE</label
+              >
+              <select id="opt_unidade">
+                <option>Carregando dados...</option>
               </select>
             </div>
             <div class="flex flex-col gap-1">
@@ -159,8 +250,7 @@
                 >SUB-UNIDADE</label
               >
               <select id="opt_subunidade">
-                <option>DA</option>
-                <option>DALF</option>
+                <option>Carregando dados...</option>
               </select>
             </div>
 
@@ -168,13 +258,23 @@
               <label for="contratada" class="active label-input"
                 >CONTRATADA</label
               >
-              <input type="text" id="contratada" name="contratada" placeholder="Razão Social Ltda" required />
+              <input
+                type="text"
+                id="contratada"
+                name="contratada"
+                placeholder="Razão Social Ltda"
+                required
+              />
             </div>
             <div class="flex flex-col gap-1">
-              <label for="valor" class="active label-input"
-                >VALOR / R$</label
-              >
-              <input type="number" id="valor" name="valor" placeholder="Apenas números" required />
+              <label for="valor" class="active label-input">VALOR / R$</label>
+              <input
+                type="number"
+                id="valor"
+                name="valor"
+                placeholder="Apenas números"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-1">
@@ -184,95 +284,223 @@
               <textarea
                 id="obj_contratacao"
                 name="obj_contratacao"
-                rows=4"
+                rows="5"
                 cols="30"
-                required 
+                required
                 placeholder="Contratação de serviços continuados..."
               ></textarea>
             </div>
           </div>
 
-          <div class="flex flex-col p-4 gap-4">      
-
-            <div class="flex flex-col gap-1">
-              <label for="nota_reserva" class="active label-input"
-                >NOTA RESERVA</label
-              >
-              <input type="text" id="nota_reserva" name="nota_reserva" required />
-            </div>
-
-            <div class="date-input flex gap-2 ">
+          <div class="flex flex-col gap-4 border-r-1 border-gray-200">
+            <div class="flex flex-col p-4 gap-4">
               <div class="flex flex-col gap-1">
-                <label for="vigencia_inicio" class="active label-input"
-                  >VIGÊNCIA / INÍCIO</label
-                >
-                <input type="date" id="vigencia_inicio" name="vigencia_inicio" required />
-              </div>           
+                <div class="flex items-center justify-between gap-1">
+                  <label class="label-input">PERÍODO VIGÊNCIA:</label>
+
+                  <div class="flex items-center w-20">
+                    <label class="flex w-10 space-x-2">
+                      <input
+                        type="radio"
+                        name="toggleSelect"
+                        value="mes"
+                        checked
+                        onclick="toggleSelects()"
+                      />
+                      <span class="block label-input">MENSAL</span>
+                    </label>
+                  </div>
+
+                  <div class="flex items-center w-20">
+                    <label class="flex w-10 space-x-2">
+                      <input
+                        type="radio"
+                        name="toggleSelect"
+                        value="ano"
+                        onclick="toggleSelects()"
+                      />
+                      <span class="block label-input">ANUAL</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <select
+                    id="opt_vigencia_mes"
+                    class="border p-2 rounded w-full"
+                  >
+                    <option value="">Carregando... ( Vigência mensal )</option>
+                  </select>
+
+                  <select
+                    id="opt_vigencia_ano"
+                    class="border p-2 rounded w-full hidden"
+                  >
+                    <option value="">Carregando... ( Vigência anual )</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="date-input flex gap-2">
+                <div class="flex flex-col gap-1">
+                  <label for="vigencia_inicio" class="active label-input"
+                    >VIGÊNCIA / INÍCIO</label
+                  >
+                  <input
+                    type="date"
+                    id="vigencia_inicio"
+                    name="vigencia_inicio"
+                    required
+                  />
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label for="vigencia_fim" class="active label-input"
+                    >VIGÊNCIA / FIM</label
+                  >
+                  <input
+                    type="date"
+                    id="vigencia_fim"
+                    name="vigencia_fim"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="date-input flex gap-2">
+                <div class="flex flex-col gap-1">
+                  <label for="vigencia_inicio" class="active label-input"
+                    >DATA ENVIO</label
+                  >
+                  <input
+                    style="width: 310px"
+                    type="date"
+                    id="data_envio"
+                    name="data_envio"
+                    required
+                  />
+                </div>
+              </div>
+
               <div class="flex flex-col gap-1">
-                <label for="vigencia_fim" class="active label-input"
-                  >VIGÊNCIA / FIM</label
+                <label for="observacao" class="active label-input"
+                  >OBSERVAÇÃO</label
                 >
-                <input type="date" id="vigencia_fim" name="vigencia_fim" required />
-              </div>           
-              
-            </div>
+                <textarea
+                  id="observacao"
+                  name="observacao"
+                  rows="4"
+                  cols="30"
+                  required
+                  placeholder="Assinatura Negada"
+                ></textarea>
+              </div>
 
-            <div class="flex flex-col gap-1">             
-              <label for="opt_responsavel" class="active label-input"
-                >RESPONSÁVEL</label
-              >
-              <select id="opt_responsavel">
-                <option>LUCAS</option>
-                <option>MARIA</option>
-              </select>
-             
+              <div class="flex flex-col gap-1">
+                <label for="opt_responsavel" class="active label-input"
+                  >RESPONSÁVEL</label
+                >
+                <select id="opt_responsavel">
+                  <option>Carregando dados...</option>
+                </select>
+              </div>
             </div>
-            <div class="flex flex-col gap-1">
-              <label for="opt_pncp" class="active label-input"
-                >PNCP</label
-              >
-              <select id="opt_pncp">
-                <option>SIM</option>
-                <option>NÃO</option>
-                <option>EDIÇÃO</option>
-              </select>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <label for="area-dotacao" class="active label-input"
-                >DOTAÇÃO ORÇAMENTÁRIA</label
-              >
-              <textarea
-                id="area-dotacao"
-                name="area-dotacao"
-                rows=4"
-                cols="30"
-                required
-                placeholder="Ações do comando geral – FUNESP"
-              ></textarea>
-          
           </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col p-4 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="nota_reserva" class="active label-input"
+                  >NOTA RESERVA</label
+                >
+                <input
+                  type="text"
+                  id="nota_reserva"
+                  name="nota_reserva"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="opt_pncp" class="active label-input">PNCP</label>
+                <select id="opt_pncp">
+                  <option>Carregando dados...</option>
+                </select>
+              </div>
+            </div>
           </div>
         </form>
       </div>
 
-      <!-- BOTÕES RODAPÉ -->
-      <div class="flex justify-center w-full bg-[rgba(0,0,0,.02)] border-1 border-gray-100 p-2 rounded-xl">
+      <div
+        class="flex justify-center items-center w-full bg-[rgba(0,0,0,.02)] border-1 border-gray-100 rounded-xl"
+      >
         <div class="flex flex-col gap-3 p-2 text-center">
-          <div id="statusMensagem" class="status-message hide"></div>
           <div class="flex mx-10 gap-4">
-            <button type="button" class="button-limpar" id="btn-limpar">
+            <button
+              class="button flex justify-center items-center gap-3"
+              id="btn_limpar_contratos"
+            >
               Limpar
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-5.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                />
+              </svg>
             </button>
-            <button type="button" class="button-cancel" id="btn-cancelar">
+
+            <button
+              class="button flex justify-center items-center gap-3"
+              id="btn_cancelar_edicao_contratos"
+            >
               Cancelar
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
             </button>
-            <button class="button-send" id="btn-enviar">
+
+            <button
+              class="button flex justify-center items-center gap-3"
+              id="btn_enviar_dados_contratos"
+            >
               Enviar
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
             </button>
           </div>
         </div>
       </div>
     </div>
+    <?!= include('script-forms');?>
   </body>
 </html>

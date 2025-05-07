@@ -2,141 +2,133 @@
  * FUNÇÕES DE BACKEND
  * Cria o menu customizado na planilha Contratos
  */
-const IDPlanilhaDadosContratos = '1-JzdJkc4Gmc9xVHaMYVQR_OSfEhEODYT99CrmTtM1cQ'
-const AbaDadosContratos = 'DadosContratoGeral'
+
+/** TESTES DEPURAÇÃO */
+// console.log(HtmlService)
+
+const IDPlanilhaDadosContratos = "1-JzdJkc4Gmc9xVHaMYVQR_OSfEhEODYT99CrmTtM1cQ";
+const AbaDadosContratos = "DadosContratoGeral";
 
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
-  ui.createMenu('Ações Personalizadas')
-    .addItem('Dados de Contratos', 'renderHtmlHomepage')
+  ui.createMenu("📋 Gerenciar Registros")
+    .addItem("Dados de Contratos", "openFormByType")
     .addToUi();
 }
 
-function renderHtmlHomepage() {
-  const indexTpl = HtmlService.createTemplateFromFile('index');
-  const window = indexTpl
-      .evaluate()
-      .setWidth(1220)
-      .setHeight(720)
-      .setFaviconUrl('https://web.celepar.pr.gov.br/drupal/images/logo_parana_400x173.png')
-      .setTitle('Inserir Dados - Contratos');
+function renderMenuHomepage() {
+  const template = HtmlService.createTemplateFromFile("UI_index_menu");
+  const window = template
+    .evaluate()
+    .setWidth(660) // Menu 640 x 440
+    .setHeight(480);
 
-      SpreadsheetApp.getUi().showModalDialog(window, 'Formulário Contratos')
-
+  SpreadsheetApp.getUi().showModalDialog(
+    window,
+    "Escolha uma das opções para editar a planilha"
+  );
 }
 
-function inserirDadosNaPlanilha(dados) {
+function openFormByType() {
+  const template = HtmlService.createTemplateFromFile("Inserir-Dados"); // formType = criar.html ou editar.html
+  const html = template.evaluate().setWidth(1600).setHeight(1100);
+  // SpreadsheetApp.getUi().showModalDialog(html, `Formulário: ${formType}`);
+  SpreadsheetApp.getUi().showModalDialog(html, `Formulário: Inserir Dados`);
+}
+
+function salvarDadosNaPlanilha(dados) {
   try {
-    var planilha = SpreadsheetApp.getActiveSpreadsheet();
-    var folha = planilha.getActiveSheet();
-    
+    const planilha = SpreadsheetApp.getActiveSpreadsheet();
+    const aba = planilha.getSheetByName("Contratos-2025");
+
+    aba.getRange("J2:J").setNumberFormat("R$ #,##0.00");
+
+    if (!aba) {
+      SpreadsheetApp.getUi().alert('⚠ Aba "Contratos-2025" não encontrada!');
+      throw new Error('⚠ Aba "Contratos-2025" não encontrada!');
+    }
+
     // Obtém o número de linhas e colunas com dados
-    var ultimaLinha = folha.getLastRow();
-    var numColunas = folha.getLastColumn();
-    
-    // Verifica se há pelo menos uma linha de cabeçalho
-    if (ultimaLinha < 1) {
-      return {
-        sucesso: false,
-        mensagem: "A planilha está vazia ou não tem cabeçalho."
-      };
-    }
-    
-    // Formata a data corretamente, ajustando o fuso horário
-    var dataEntrada = new Date(dados.dataEntrada + "T12:00:00");
-    var dataFormatada = Utilities.formatDate(dataEntrada, "GMT-3", "dd/MM/yyyy");
-    
-    // Prepara a linha de dados (com protocolo já formatado)
-    var novaLinha = [
-      dataFormatada,
-      dados.protocolo, // O protocolo já vem formatado do formulário
-      dados.fatura,
-      dados.contrato,
-      dados.obra,
-      dados.medicao,
-      "R$ " + formatarNumero(dados.valor),
-      dados.empenho,
-      dados.tipo,
-      dados.acaoOrcamentaria,
-      dados.fonte,
-      dados.elementoDespesa
+    const ultimaLinha = aba.getLastRow();
+    const novaLinha = ultimaLinha + 1;
+    // const numColunas = folha.getLastColumn();
+
+    // Pega o cabeçalho (primeira linha) para garantir o mapeamento correto
+    // const cabecalhos = aba.getRange(1, 1, 1, aba.getLastColumn()).getValues()[0];
+
+    // Montar a linha para inserção
+    // const linhaParaInserir = cabecalhos.map(cabecalho => dados[cabecalho] || ''); // Se não existir, coloca vazio
+    const linhaParaInserir = [
+      dados.num_sesp || "",
+      dados.num_gms || "",
+      dados.e_protocolo || "",
+      dados.licitacao || "",
+      dados.opt_modal_licitacao || "",
+      dados.opt_palavra_chave || "",
+      dados.opt_unidade || "",
+      dados.opt_subunidade || "",
+      dados.contratada || "",
+      dados.valor || "",
+      dados.obj_contratacao || "",
+      dados.opt_vigencia_mes || " - ",
+      dados.opt_vigencia_ano || " - ",
+      dados.vigencia_inicio || "",
+      dados.vigencia_fim || "",
+      dados.data_envio || "",
+      dados.observacao || "",
+      dados.opt_responsavel || "",
+      dados.nota_reserva || "",
+      dados.opt_pncp || "",
     ];
-    
-    // Verifica se há apenas uma linha de cabeçalho (primeira inserção)
-    if (ultimaLinha === 1) {
-      folha.getRange(2, 1, 1, novaLinha.length).setValues([novaLinha]);
-      return {
-        sucesso: true,
-        mensagem: "Fatura inserida com sucesso!"
-      };
-    }
-    
-    // Obtém todas as datas da coluna A (excluindo o cabeçalho)
-    var datasExistentes = folha.getRange(2, 1, ultimaLinha - 1, 1).getValues();
-    
-    // Encontrar a posição correta para inserir baseado na data
-    var linhaInsercao = 2; // Começa após o cabeçalho
-    var inserido = false;
-    
-    for (var i = 0; i < datasExistentes.length; i++) {
-      // Converte a string de data para objeto Date
-      var dataAtual = converterParaData(datasExistentes[i][0]);
-      
-      // Compara com a data da nova entrada
-      if (dataEntrada >= dataAtual) {
-        linhaInsercao = i + 2; // +2 porque i começa em 0 e queremos pular o cabeçalho
-        inserido = true;
-        break;
-      }
-    }
-    
-    // Se não encontrou uma posição (nova data é a mais antiga), insere no final
-    if (!inserido) {
-      linhaInsercao = ultimaLinha + 1;
-    }
-    
-    // Insere uma linha vazia na posição
-    folha.insertRowBefore(linhaInsercao);
-    
-    // Insere os dados na linha
-    folha.getRange(linhaInsercao, 1, 1, novaLinha.length).setValues([novaLinha]);
-    
-    return {
-      sucesso: true,
-      mensagem: "Fatura inserida com sucesso!"
-    };
+
+    // Inserir a linha
+    aba
+      .getRange(novaLinha, 1, 1, linhaParaInserir.length)
+      .setValues([linhaParaInserir]);
+
+    // Retorna uma mensagem de sucesso que será exibida em popup
+    SpreadsheetApp.getUi().alert("✅ Contrato salvo com sucesso!");
+    return "✅ Contrato salvo com sucesso!";
   } catch (erro) {
     return {
       sucesso: false,
-      mensagem: "Erro ao inserir dados: " + erro.toString()
+      mensagem: "Erro ao inserir dados: " + erro.toString(),
     };
   }
 }
+// console.log(salvarDadosNaPlanilha({
+//   "num_sesp" : "1a3d21",
+//   "num_gms" : "1a3d21",
+//   "opt_modal_licitacao" : "LICITAÇAÕ 1a3d21",
+//   "opt_palavra_chave" : "aca1a3d21",
+//   "opt_unidade" : "PM",
+//   "opt_subunidade" : "15bpm",
+// }))
 
 function listarOpcoes() {
   const planilha = SpreadsheetApp.openById(IDPlanilhaDadosContratos);
   const aba = planilha.getSheetByName(AbaDadosContratos);
 
   return {
-    opt_palavra_chave: getColunaValores(aba, 1),      // Coluna A
-    opt_modal_licitacao: getColunaValores(aba, 2),    // Coluna B
-    opt_unidade: getColunaValores(aba, 3),            // Coluna C
-    opt_subunidade: getColunaValores(aba, 4),         // Coluna D
-    opt_pncp: getColunaValores(aba, 5),                // Coluna E
-    opt_responsavel: getColunaValores(aba, 6)                // Coluna F
+    opt_palavra_chave: getColunaValores(aba, 1), // Coluna A
+    opt_modal_licitacao: getColunaValores(aba, 2), // Coluna B
+    opt_unidade: getColunaValores(aba, 3), // Coluna C
+    opt_subunidade: getColunaValores(aba, 4), // Coluna D
+    opt_pncp: getColunaValores(aba, 5), // Coluna E
+    opt_responsavel: getColunaValores(aba, 6), // Coluna F
+    opt_vigencia_mes: getColunaValores(aba, 7), // Coluna F
+    opt_vigencia_ano: getColunaValores(aba, 8), // Coluna F
   };
 }
 
 function getColunaValores(sheet, colunaIndex) {
-  return sheet.getRange(2, colunaIndex, sheet.getLastRow() - 1)
+  return sheet
+    .getRange(2, colunaIndex, sheet.getLastRow() - 1)
     .getValues()
     .flat()
     .filter(String); // Remove vazios
 }
 
-
-
 function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename)
-    .getContent();
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }

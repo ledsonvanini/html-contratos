@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Menu CRUD</title>
+        <base target="_top"/>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+        <style>:root
+        {
+            --blue-01: #526299;
+            --blue-02: #334377;
+            --red-01: #e1282b;
+            --red-02: #b92023;
+            --green-01: #17aa37;
+            --yellow-01: #bab03d;
+            --yellow-02: #968c30;
+        }
+        .logo {
+            width: 120px;
+            width: 120px;
+            border-radius: 50%;
+            box-shadow: 5px 5px 15px rgb(223, 223, 223);
+        }
+        .button {
+            border: 1px solid #c7c7c7;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .button,
+        .button > input {
+            background-color: var(--blue-01);
+            border-radius: 8px;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .button:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <div class="flex justify-center items-center  w-full h-dvh">
+        <div class="flex flex-col rounded-2xl gap-4 bg-gray-200 p-6 justify-center items-center">
+            <div class="flex flex-col bg-gray-100 w-full items-center gap-4 p-4 rounded-xl  border border-gray-300 shadow-xs">
+                <img class="logo" src="https://www.escola.pc.pr.gov.br/sites/espc/arquivos_restritos/files/imagem/2021-04/607f50874a593-sesp.jpg" alt="Logo Sesp"/>
+                <div class="flex flex-col w-full justify-center items-center">
+                    <h3 class="text-3xl font-bold">Lançamento Contratos 2025</h3>
+                    <p class="text-xl">Centro de Contratos SESP-CCC</p>
+                </div>
+            </div>
+            <div class="flex gap-4 p-4 border bg-gray-300 border-gray-300 shadow-xs rounded-xl">
+                <div class="button flex justify-center items-center gap-3">
+                    <input type="button" id="btn_menu_create" value="Lançar" onclick="openForm('Inserir-Dados')"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
+                    </svg>
+                </div>
+                <div class="button flex justify-center items-center gap-3">
+                    <input type="button" id="btn_menu_edit" value="Editar"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                    </svg>
+                </div>
+                <div class="button flex justify-center items-center gap-3">
+                    <input type="button" id="btn_menu_find" value="Pesquisar"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <?!= include('script-forms')?>
+
+</body></html>

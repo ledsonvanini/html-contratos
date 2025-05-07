@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="flex flex-col p-4 gap-3 bg-gray-300 w-sm">
+      <div class="flex items-center justify-between bg-red-100 gap-4">
+        <h2 class="text-lg font-semibold">VIGÊNCIA:</h2>
+
+        <div class="flex items-center gap-3 mx-4">
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="toggleSelect"
+              value="sim"
+              checked
+              onclick="toggleSelects()"
+            />
+            <span>MENSAL</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="toggleSelect"
+              value="nao"
+              onclick="toggleSelects()"
+            />
+            <span>ANUAL</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <select id="selectSim" class="border p-2 rounded w-full">
+          <option value="">Carregando... ( Vigência mensal )</option>
+        </select>
+
+        <select id="selectNao" class="border p-2 rounded w-full hidden">
+          <option value="">Carregando... ( Vigência anual )</option>
+        </select>
+      </div>
+    </div>
+
+    <script>
+      function toggleSelects() {
+        const simRadio = document.querySelector(
+          'input[name="toggleSelect"][value="sim"]'
+        ).checked;
+        const selectSim = document.getElementById("selectSim");
+        const selectNao = document.getElementById("selectNao");
+
+        if (simRadio) {
+          selectSim.classList.remove("hidden");
+          selectNao.classList.add("hidden");
+        } else {
+          selectSim.classList.add("hidden");
+          selectNao.classList.remove("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>
