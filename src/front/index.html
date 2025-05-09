@@ -159,7 +159,6 @@
           Voltar ao Menu
         </button>
       </div>
-
       <div
         class="flex flex-col p-0 justify-center border-1 border-gray-100 bg-gray-100 rounded-xl"
       >
@@ -169,15 +168,51 @@
         >
           <!-- FORM COL INPUT 1 -->
           <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
-            <div class="flex flex-col gap-1">
-              <label for="num_sesp" class="active label-input">Nº SESP</label>
-              <input
-                type="text"
-                id="num_sesp"
-                name="num_sesp"
-                placeholder="xxxx/2025"
-                required
-              />
+            <div class="flex gap-2">
+              <div class="flex flex-col gap-1">
+                <label for="num_sesp" class="active label-input">Nº SESP</label>
+                <input
+                  type="text"
+                  id="num_sesp"
+                  name="num_sesp"
+                  required
+                  readonly
+                />
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="ano_num_sesp" class="active label-input">ANO</label>
+                <input
+                  type="number"
+                  id="ano_num_sesp"
+                  name="ano_num_sesp"
+                  value="2025"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              <div class="flex flex-col gap-1">
+                <label for="num_sesp" class="active label-input">Nº GMS</label>
+                <input
+                  type="number"
+                  id="num_gms"
+                  name="num_gms"
+                  min="0"
+                  required
+                  readonly
+                />
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="ano_num_sesp" class="active label-input">ANO</label>
+                <input
+                  type="number"
+                  id="ano_num_gms"
+                  name="ano_num_gms"
+                  value="2025"
+                  required
+                />
+              </div>
             </div>
 
             <div class="flex flex-col gap-1">
@@ -272,6 +307,7 @@
                 type="number"
                 id="valor"
                 name="valor"
+                min="0"
                 placeholder="Apenas números"
                 required
               />

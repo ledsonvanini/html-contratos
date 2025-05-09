@@ -11,8 +11,8 @@
 
     <style>
       :root {
-        --blue-00: #6379be;
-        --blue-01: #526299;
+        --blue-00: #8094d0;
+        --blue-01: #4c63ad;
         --blue-02: #334377;
         --red-01: #e1282b;
         --red-02: #b92023;
@@ -44,12 +44,17 @@
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.7);
         box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-        background-color: var(--blue-00);
         padding: 0.5rem 1.3rem;
         color: rgba(255, 255, 255, 0.9);
         font-weight: 600;
         font-size: 1.2rem;
         letter-spacing: 1px;
+      }
+      .button-blue00 {
+        background-color: var(--blue-00);
+      }
+      .button-blue01 {
+        background-color: var(--blue-01);
       }
 
       .button > input:hover {
@@ -137,7 +142,7 @@
           src="https://www.escola.pc.pr.gov.br/sites/espc/arquivos_restritos/files/imagem/2021-04/607f50874a593-sesp.jpg"
           alt="Logo Sesp"
         />
-        <button
+        <!-- <button
           type="button"
           id="btn_back_menu"
           class="flex px-1 btn-menu flex justify-center items-center gap-3"
@@ -157,7 +162,7 @@
             />
           </svg>
           Voltar ao Menu
-        </button>
+        </button> -->
       </div>
 
       <div
@@ -169,26 +174,49 @@
         >
           <!-- FORM COL INPUT 1 -->
           <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
-            <div class="flex flex-col gap-1">
-              <label for="num_sesp" class="active label-input">Nº SESP</label>
-              <input
-                type="text"
-                id="num_sesp"
-                name="num_sesp"
-                placeholder="xxxx/2025"
-                required
-              />
+            <div class="flex gap-2">
+              <div class="flex flex-col gap-1">
+                <label for="num_sesp" class="active label-input">Nº SESP</label>
+                <input
+                  type="text"
+                  id="num_sesp"
+                  name="num_sesp"
+                  required
+                  readonly
+                />
+              </div>
+              <div class="flex flex-col gap-1 w-[130px]">
+                <label for="ano_num_sesp" class="active label-input">ANO</label>
+                <input
+                  type="number"
+                  id="ano_num_sesp"
+                  name="ano_num_sesp"
+                  value="2025"
+                  required
+                />
+              </div>
             </div>
-
-            <div class="flex flex-col gap-1">
-              <label for="num_gms" class="active label-input">Nº GMS</label>
-              <input
-                type="text"
-                id="num_gms"
-                name="num_gms"
-                placeholder="xxxx/2025"
-                required
-              />
+            <div class="flex gap-2">
+              <div class="flex flex-col gap-1">
+                <label for="num_gms" class="active label-input">Nº GMS</label>
+                <input
+                  type="number"
+                  id="num_gms"
+                  name="num_gms"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-1 w-[130px]">
+                <label for="ano_num_gms" class="active label-input">ANO</label>
+                <input
+                  type="number"
+                  id="ano_num_gms"
+                  name="ano_num_gms"
+                  value="2025"
+                  required
+                />
+              </div>
             </div>
 
             <div class="flex flex-col gap-1">
@@ -199,22 +227,36 @@
                 type="text"
                 id="e_protocolo"
                 name="e_protocolo"
-                placeholder="xx.xxx.xxx-x"
+                placeholder="00.000.000-0"
                 required
               />
             </div>
 
-            <div class="flex flex-col gap-1">
-              <label for="licitacao" class="active label-input"
-                >Nº. LICITAÇÃO/DISPENSA</label
-              >
-              <input
-                type="text"
-                id="licitacao"
-                name="licitacao"
-                placeholder="xxxx/2025"
-                required
-              />
+            <div class="flex gap-2">
+              <div class="flex flex-col gap-1">
+                <label for="num_licitacao" class="active label-input"
+                  >Nº LICITAÇÃO/DISP</label
+                >
+                <input
+                  type="number"
+                  id="num_licitacao"
+                  name="num_licitacao"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-1 w-[130px]">
+                <label for="ano_num_licitacao" class="active label-input"
+                  >ANO</label
+                >
+                <input
+                  type="number"
+                  id="ano_num_licitacao"
+                  name="ano_num_licitacao"
+                  value="2025"
+                  required
+                />
+              </div>
             </div>
 
             <div class="flex flex-col gap-1">
@@ -272,6 +314,7 @@
                 type="number"
                 id="valor"
                 name="valor"
+                min="0"
                 placeholder="Apenas números"
                 required
               />
@@ -431,12 +474,52 @@
       </div>
 
       <div
-        class="flex justify-center items-center w-full bg-[rgba(0,0,0,.02)] border-1 border-gray-100 rounded-xl"
+        class="flex justify-between items-center w-full bg-[rgba(0,0,0,.02)] border-1 border-gray-100 rounded-xl"
       >
-        <div class="flex flex-col gap-3 p-2 text-center">
-          <div class="flex mx-10 gap-4">
+        <div class="flex gap-4 p-4 bg-gray-100 shadow-xs rounded-xl">
+          <div
+            class="button button-blue00 flex justify-center items-center gap-3"
+          >
+            <input type="button" id="btn_menu_edit" value="Editar" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewbox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+              />
+            </svg>
+          </div>
+          <div
+            class="button button-blue00 flex justify-center items-center gap-3"
+          >
+            <input type="button" id="btn_menu_find" value="Pesquisar" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewbox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3 text-center">
+          <div class="flex gap-4 p-4 bg-gray-100 shadow-xs rounded-xl">
             <button
-              class="button flex justify-center items-center gap-3"
+              class="button button-blue01 flex justify-center items-center gap-3"
               id="btn_limpar_contratos"
             >
               Limpar
@@ -457,7 +540,7 @@
             </button>
 
             <button
-              class="button flex justify-center items-center gap-3"
+              class="button button-blue01 flex justify-center items-center gap-3"
               id="btn_cancelar_edicao_contratos"
             >
               Cancelar
@@ -478,7 +561,7 @@
             </button>
 
             <button
-              class="button flex justify-center items-center gap-3"
+              class="button button-blue01 flex justify-center items-center gap-3"
               id="btn_enviar_dados_contratos"
             >
               Enviar
