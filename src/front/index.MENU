@@ -49,7 +49,7 @@
                 <img class="logo" src="https://www.escola.pc.pr.gov.br/sites/espc/arquivos_restritos/files/imagem/2021-04/607f50874a593-sesp.jpg" alt="Logo Sesp"/>
                 <div class="flex flex-col w-full justify-center items-center">
                     <h3 class="text-3xl font-bold">Lançamento Contratos 2025</h3>
-                    <p class="text-xl">Setor de Contratos SESP</p>
+                    <p class="text-xl">Centro de Contratos SESP-CCC</p>
                 </div>
             </div>
             <div class="flex gap-4 p-4 border bg-gray-300 border-gray-300 shadow-xs rounded-xl">
@@ -75,9 +75,7 @@
             </div>
         </div>
     </div>
-    
-          <?!= include('script-forms')?>
 
-</body>
+    <?!= include('script-forms')?>
 
-</html>
+</body></html>

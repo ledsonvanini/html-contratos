@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   numGmsInput.focus();
   atualizarNumSesp(); // Pega o número mais recente
   carregarDropdowns(); // Carrega os selects
+  configurarListenersDeVigencia(); // ⬅ adicionamos isso aqui
 });
 
 function openForm(typeForm) {
@@ -30,7 +31,7 @@ function montarObjetoDoFormulario() {
     const nome = element.name;
     let valor = element.value;
 
-    // Tratamento padrão: transforma tudo em maiúsculas (se for texto)
+    // Aplica upperCase apenas nos campos normais
     if (typeof valor === "string") {
       valor = forceTextUpperCase(valor);
     }
@@ -38,7 +39,97 @@ function montarObjetoDoFormulario() {
     dados[nome] = valor;
   });
 
+  // Obter vigência diretamente do <select> e não aplicar upperCase aqui!
+  const tipoVigenciaSelecionado = document.querySelector(
+    'input[name="toggleSelect"]:checked'
+  )?.value;
+
+  const quantidadeRaw =
+    tipoVigenciaSelecionado === "mes"
+      ? document.getElementById("opt_vigencia_mes").value
+      : document.getElementById("opt_vigencia_ano").value;
+
+  if (quantidadeRaw) {
+    const textoLimpo = quantidadeRaw.trim().toLowerCase();
+
+    // Regex para capturar número e unidade válidos
+    const match = textoLimpo.match(/^(\d+)\s*(m[eê]s(?:es)?|ano(?:s)?)$/i);
+
+    if (match) {
+      const numero = match[1];
+      const unidade = match[2].toLowerCase();
+
+      dados["vigenciaTexto"] = `${numero} ${unidade}`;
+    } else {
+      // Fallback, caso venha texto malformado
+      const numero = textoLimpo.match(/\d+/)?.[0];
+      const tipo = textoLimpo.includes("ano") ? "anos" : "meses";
+
+      if (numero) {
+        dados["vigenciaTexto"] = `${numero} ${tipo}`;
+      }
+    }
+  }
+
   return dados;
+}
+
+function atualizarDataFim() {
+  const dataInicio = document.querySelector(
+    'input[name="vigencia_inicio"]'
+  )?.value;
+  const tipo = document.querySelector(
+    'input[name="toggleSelect"]:checked'
+  )?.value;
+  const quantidade =
+    tipo === "mes"
+      ? document.getElementById("opt_vigencia_mes")?.value
+      : document.getElementById("opt_vigencia_ano")?.value;
+
+  if (!dataInicio || !quantidade) return;
+
+  // 🔍 Extração segura: número + unidade limpa
+  const quantidadeMatch = quantidade.match(/\d+/);
+  const numero = quantidadeMatch ? quantidadeMatch[0] : null;
+
+  if (!numero) return;
+
+  const unidade =
+    tipo === "mes"
+      ? numero === "1"
+        ? "mês"
+        : "meses"
+      : numero === "1"
+      ? "ano"
+      : "anos";
+
+  const textoVigencia = `${numero} ${unidade}`;
+
+  google.script.run
+    .withSuccessHandler((dataFim) => {
+      const inputFim = document.querySelector('input[name="vigencia_fim"]');
+      if (inputFim) inputFim.value = dataFim;
+    })
+    .withFailureHandler((err) => {
+      console.warn("Erro ao calcular FIM_VIGENCIA:", err.message);
+    })
+    .fimVigencia(dataInicio, textoVigencia);
+}
+
+function configurarListenersDeVigencia() {
+  const campos = [
+    'input[name="vigencia_inicio"]',
+    'input[name="toggleSelect"]',
+    "#opt_vigencia_mes",
+    "#opt_vigencia_ano",
+  ];
+
+  campos.forEach((selector) => {
+    const el = document.querySelector(selector);
+    if (el) {
+      el.addEventListener("change", atualizarDataFim);
+    }
+  });
 }
 
 function salvarContrato() {
