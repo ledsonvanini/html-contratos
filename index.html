@@ -44,7 +44,7 @@
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.7);
         box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-        padding: 0.5rem 1.3rem;
+        padding: 0.5rem 1.1rem;
         color: rgba(255, 255, 255, 0.9);
         font-weight: 600;
         font-size: 1.2rem;
@@ -135,7 +135,7 @@
     </style>
   </head>
   <body class="flex justify-center">
-    <div class="flex flex-col py-2 gap-2">
+    <div class="flex flex-col py-2 gap-2  px-0">
       <div class="form-top-menu flex w-full items-center justify-between">
         <img
           class="logo"
@@ -166,45 +166,23 @@
       </div>
       <!-- PESQUISAR CONTRATOS -->
       <div class="flex w-full justify-center">
-        <p class="p-input">PESQUISAR CONTRATOS</p>
+        <p class="p-input font-semibold text-gray-600">PESQUISAR CONTRATOS</p>
       </div>
       <div
-        class="flex items-center w-full bg-white border-1 border-gray-100 rounded-xl"
+        class="flex items-center p-4 w-full border-1  border-gray-100 rounded-xl"
       >
-        <div class="flex w-full justify-between gap-4 p-4 shadow-xs rounded-xl">
+        <div class="flex w-full gap-4 rounded-xl">
           <div class="flex gap-2">
             <div class="flex flex-col gap-1">
               <label for="num_sesp" class="active label-input">Nº SESP</label>
-              <input type="number" id="num_sesp" name="num_sesp" required />
+              <input type="number" id="num_sesp_search" name="num_sesp_search" required />
             </div>
             <div class="flex flex-col gap-1 w-[130px]">
-              <label for="ano_num_sesp" class="active label-input">ANO</label>
+              <label for="ano_num_sesp_search" class="active label-input">ANO</label>
               <input
                 type="number"
-                id="ano_num_sesp"
-                name="ano_num_sesp"
-                value="2025"
-                required
-              />
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <div class="flex flex-col gap-1">
-              <label for="num_gms" class="active label-input">Nº GMS</label>
-              <input
-                type="number"
-                id="num_gms"
-                name="num_gms"
-                min="0"
-                required
-              />
-            </div>
-            <div class="flex flex-col gap-1 w-[130px]">
-              <label for="ano_num_gms" class="active label-input">ANO</label>
-              <input
-                type="number"
-                id="ano_num_gms"
-                name="ano_num_gms"
+                id="ano_num_ses_search"
+                name="ano_num_sesp_search"
                 value="2025"
                 required
               />
@@ -212,22 +190,46 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="e_protocolo" class="active label-input"
+            <label for="e_protocolo_search" class="active label-input"
               >e-PROTOCOLO</label
             >
             <input
               type="text"
-              id="e_protocolo"
-              name="e_protocolo"
+              id="e_protocolo_search"
+              name="e_protocolo_search"
               placeholder="00.000.000-0"
               required
             />
           </div>
+
+          <div class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <label for="num_gms_search" class="active label-input">Nº GMS</label>
+              <input
+                type="number"
+                id="num_gms_search"
+                name="num_gms_search"
+                min="0"
+                required
+              />
+            </div>
+            <div class="flex flex-col gap-1 w-[130px]">
+              <label for="ano_num_gms_search" class="active label-input">ANO</label>
+              <input
+                type="number"
+                id="ano_num_gms_search"
+                name="ano_num_gms_search"
+                value="2025"
+                required
+              />
+            </div>
+          </div>
+
           <div class="flex flex-col gap-1">
-            <label for="opt_responsavel" class="active label-input"
+            <label for="opt_responsavel_search" class="active label-input"
               >RESPONSÁVEL</label
             >
-            <select id="opt_responsavel">
+            <select id="opt_responsavel_search">
               <option>Carregando dados...</option>
             </select>
           </div>
@@ -253,18 +255,22 @@
           </svg>
         </div>
       </div>
+
       <div class="flex w-full justify-center">
-        <p class="p-input">LANÇAR DADOS DE CONTRATOS</p>
+        <p class="p-input font-semibold text-gray-600">LANÇAR DADOS DE CONTRATOS</p>
       </div>
+      <!-- BLOCO FORMULARIO LANÇAR DADOS -->
       <div
         class="flex flex-col p-0 justify-center border-1 border-gray-100 bg-gray-100 rounded-xl"
       >
         <form
           id="form_contratos"
-          class="rounded-xl p-2 flex justify-center gap-2"
+          class="rounded-xl p-2 flex justify-center"
         >
           <!-- FORM COL INPUT 1 -->
-          <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
+          <div
+            class="flex flex-col p-4 border-r-1 border-gray-200 gap-4 w-full"
+          >
             <div class="flex gap-2">
               <div class="flex flex-col gap-1">
                 <label for="num_sesp" class="active label-input">Nº SESP</label>
@@ -287,6 +293,59 @@
                 />
               </div>
             </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="e_protocolo" class="active label-input"
+                >e-PROTOCOLO</label
+              >
+              <input
+                type="text"
+                id="e_protocolo"
+                name="e_protocolo"
+                placeholder="00.000.000-0"
+                required
+              />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="opt_palavra-chave" class="active label-input"
+                >PALAVRA-CHAVE</label
+              >
+              <select id="opt_palavra_chave">
+                <option>Carregando dados...</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="opt_unidade" class="active label-input"
+                >UNIDADE</label
+              >
+              <select id="opt_unidade">
+                <option>Carregando dados...</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="opt_subunidade" class="active label-input"
+                >SUB-UNIDADE</label
+              >
+              <select id="opt_subunidade">
+                <option>Carregando dados...</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="opt_responsavel" class="active label-input"
+                >RESPONSÁVEL</label
+              >
+              <select id="opt_responsavel">
+                <option>Carregando dados...</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col p-4 border-r-1 border-gray-200 gap-4 w-full"
+          >
             <div class="flex gap-2">
               <div class="flex flex-col gap-1">
                 <label for="num_gms" class="active label-input">Nº GMS</label>
@@ -308,19 +367,6 @@
                   required
                 />
               </div>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <label for="e_protocolo" class="active label-input"
-                >e-PROTOCOLO</label
-              >
-              <input
-                type="text"
-                id="e_protocolo"
-                name="e_protocolo"
-                placeholder="00.000.000-0"
-                required
-              />
             </div>
 
             <div class="flex gap-2">
@@ -360,53 +406,15 @@
             </div>
 
             <div class="flex flex-col gap-1">
-              <label for="opt_palavra-chave" class="active label-input"
-                >PALAVRA-CHAVE</label
-              >
-              <select id="opt_palavra_chave">
-                <option>Carregando dados...</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex flex-col p-4 border-r-1 border-gray-200 gap-4">
-            <div class="flex flex-col gap-1">
-              <label for="opt_unidade" class="active label-input"
-                >UNIDADE</label
-              >
-              <select id="opt_unidade">
-                <option>Carregando dados...</option>
-              </select>
-            </div>
-            <div class="flex flex-col gap-1">
-              <label for="opt_subunidade" class="active label-input"
-                >SUB-UNIDADE</label
-              >
-              <select id="opt_subunidade">
-                <option>Carregando dados...</option>
-              </select>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <label for="contratada" class="active label-input"
-                >CONTRATADA</label
+              <label for="natureza_desp" class="active label-input"
+                >NATUREZA DESP.</label
               >
               <input
                 type="text"
-                id="contratada"
-                name="contratada"
-                placeholder="Razão Social Ltda"
-                required
-              />
-            </div>
-            <div class="flex flex-col gap-1">
-              <label for="valor" class="active label-input">VALOR / R$</label>
-              <input
-                type="number"
-                id="valor"
-                name="valor"
+                id="natureza_desp"
+                name="natureza_desp"
                 min="0"
-                placeholder="Apenas números"
+                placeholder="0000.00"
                 required
               />
             </div>
@@ -418,7 +426,7 @@
               <textarea
                 id="obj_contratacao"
                 name="obj_contratacao"
-                rows="5"
+                rows="4"
                 cols="30"
                 required
                 placeholder="Contratação de serviços continuados..."
@@ -426,7 +434,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-4 border-r-1 border-gray-200">
+          <div class="flex flex-col gap-4 border-r-1 border-gray-200 w-full">
             <div class="flex flex-col p-4 gap-4">
               <div class="flex flex-col gap-1">
                 <div class="flex items-center justify-between gap-1">
@@ -528,20 +536,42 @@
                   placeholder="Assinatura Negada"
                 ></textarea>
               </div>
-
               <div class="flex flex-col gap-1">
-                <label for="opt_responsavel" class="active label-input"
-                  >RESPONSÁVEL</label
-                >
-                <select id="opt_responsavel">
+                <label for="opt_pncp" class="active label-input">PNCP</label>
+                <select id="opt_pncp">
                   <option>Carregando dados...</option>
                 </select>
               </div>
             </div>
           </div>
+          <div class="flex flex-col gap-0  ">
+            <div class="flex flex-col p-4 gap-4 w-[320px]">
+              <div class="flex flex-col gap-1">
+                <label for="cnpj_contratada" class="active label-input"
+                  >CONTRATADA CNPJ</label
+                >
+                <input
+                  type="text"
+                  id="cnpj_contratada"
+                  name="cnpj_contratada"
+                  placeholder="00.000.000/0000-00"
+                  required
+                />
+              </div>
 
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col p-4 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="razao_contratada" class="active label-input"
+                  >CONTRATADA RAZÃO SOCIAL</label
+                >
+                <input
+                  type="text"
+                  id="razao_contratada"
+                  name="razao_contratada"
+                  placeholder="Razão Social Ltda"
+                  required
+                />
+              </div>
+
               <div class="flex flex-col gap-1">
                 <label for="nota_reserva" class="active label-input"
                   >NOTA RESERVA</label
@@ -553,85 +583,92 @@
                   required
                 />
               </div>
+
               <div class="flex flex-col gap-1">
-                <label for="opt_pncp" class="active label-input">PNCP</label>
-                <select id="opt_pncp">
-                  <option>Carregando dados...</option>
-                </select>
+                <label for="valor" class="active label-input">VALOR / R$</label>
+                <input
+                  type="number"
+                  id="valor"
+                  name="valor"
+                  min="0"
+                  placeholder="Apenas números"
+                  required
+                />
               </div>
-              <div class="flex flex-col justify-end h-80 gap-3 text-center">
-                <div
-                  class="flex flex-col gap-4 p-4 border-1 border-gray-200 hadow-xs rounded-xl"
+            </div>
+
+            <div class="flex flex-col justify-end gap-1 text-center">
+              <div
+                class="flex gap-1 px-4 mt-25 shadow-xs rounded-xl"
+              >
+                <!-- <button
+                  class="button button-blue01 flex justify-between items-center gap-3"
+                  id="btn_limpar_contratos"
                 >
-                  <button
-                    class="button button-blue01 flex justify-between items-center gap-3"
-                    id="btn_limpar_contratos"
+                  Limpar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-5.5"
                   >
-                    Limpar
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-5.5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                    />
+                  </svg>
+                </button> -->
 
-                  <button
-                    class="button button-blue01 flex justify-between items-center gap-3"
-                    id="btn_cancelar_edicao_contratos"
+                <button
+                  class="button button-blue01 flex justify-between items-center gap-2"
+                  id="btn_cancelar_edicao_contratos"
+                >
+                  Cancelar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6"
                   >
-                    Cancelar
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </button>
 
-                  <button
-                    class="button button-blue01 flex justify-between items-center gap-3"
-                    id="btn_enviar_dados_contratos"
+                <button
+                  class="button button-blue01 flex justify-between items-center gap-2"
+                  id="btn_enviar_dados_contratos"
+                >
+                  Enviar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6"
                   >
-                    Enviar
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
         </form>
       </div>
     </div>
-    <?!= include('script-forms');?>
+    <!-- <?!= include('script-forms');?> -->
   </body>
 </html>
