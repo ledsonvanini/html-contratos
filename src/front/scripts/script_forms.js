@@ -13,11 +13,43 @@ const btnEnviarFormContrato = document.querySelector(
 
 /** DOM READY*/
 document.addEventListener("DOMContentLoaded", () => {
+  toggleSecao("insercao");
   numGMSFocus();
   atualizarNumSesp(); // Pega o número mais recente
   carregarDropdowns(); // Carrega os selects
   configurarListenersDeVigencia(); // ⬅ adicionamos isso aqui
 });
+/** ======== TOOGLE SESSION FUNCTIONS ======== */
+function toggleSecao(ativa) {
+  const secoes = ["pesquisa", "insercao"];
+
+  secoes.forEach((secao) => {
+    const content = document.getElementById(`secao-${secao}`);
+    const icon = document.getElementById(`icon-${secao}`);
+    const togglePesquisa = document.getElementById(`toggle-pesquisa`);
+    const toggleInsercao = document.getElementById(`toggle-insercao`);
+    const isAtiva = secao === ativa;
+
+    if (isAtiva) {
+      content.classList.remove("max-h-0");
+      content.classList.add("max-h-screen");
+      toggleInsercao.classList.add("bg-slate-200");
+      togglePesquisa.classList.remove("bg-slate-200");
+      icon.classList.add("rotate-90");
+    } else {
+      content.classList.remove("max-h-screen");
+      toggleInsercao.classList.remove("bg-slate-200");
+      togglePesquisa.classList.add("bg-slate-200");
+      content.classList.add("max-h-0");
+      icon.classList.remove("rotate-90");
+    }
+  });
+}
+
+// Mostra a seção "pesquisa" por padrão ao carregar
+// window.addEventListener('DOMContentLoaded', () => {
+//   toggleSecao('pesquisa');
+// });
 
 /** ======== FRONTEND FORM FUNCTIONS ======== */
 

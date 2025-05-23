@@ -19,7 +19,7 @@ function autoAjustarLinha(e) {
   // Ativa quebra de linha apenas na célula editada
   range.setWrap(true);
   // Ajusta a altura da linha automaticamente
-  sheet.autoResizeRows(row, 1);
+  sheet.autoResizeRows(row, 3);
 }
 
 function onOpen() {
