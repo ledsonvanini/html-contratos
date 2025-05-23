@@ -1,14 +1,16 @@
+
 /**
  * FUNÇÕES DE BACKEND
  * Cria o menu customizado na planilha Contratos
  */
-const IDPlanilhaDadosContratos = "1-JzdJkc4Gmc9xVHaMYVQR_OSfEhEODYT99CrmTtM1cQ";
-const AbaDadosContratos = "DadosContratoGeral";
+const IDPlanilhaDadosContratos = '1-JzdJkc4Gmc9xVHaMYVQR_OSfEhEODYT99CrmTtM1cQ'
+const AbaDadosContratos = 'DadosContratoGeral'
+
 
 /** ====== EVENTOS DE PLANILHA ====== */
 
 function onEdit(e) {
-  autoAjustarLinha(e);
+    autoAjustarLinha(e)  
 }
 
 function autoAjustarLinha(e) {
@@ -19,34 +21,36 @@ function autoAjustarLinha(e) {
   // Ativa quebra de linha apenas na célula editada
   range.setWrap(true);
   // Ajusta a altura da linha automaticamente
-  sheet.autoResizeRows(row, 3);
+  sheet.autoResizeRows(row, 3);  
 }
+
+
 
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu("📋 Gerenciar Registros")
-    .addItem("Dados de Contratos", "openFormByType")
+    .addItem('Dados de Contratos', 'openFormByType')
     .addToUi();
 }
 
 /** FORMULÁRIOS E HTML  */
 
-function renderMenuHomepage() {
-  const template = HtmlService.createTemplateFromFile("UI_index_menu");
-  const window = template
-    .evaluate()
-    .setWidth(660) // Menu 640 x 440
-    .setHeight(480);
 
-  SpreadsheetApp.getUi().showModalDialog(
-    window,
-    "Escolha uma das opções para editar a planilha"
-  );
+function renderMenuHomepage() {
+  const template = HtmlService.createTemplateFromFile('UI_index_menu');
+  const window = template.evaluate()
+    .setWidth(660)   // Menu 640 x 440 
+    .setHeight(480)
+
+  SpreadsheetApp.getUi().showModalDialog(window, "Escolha uma das opções para editar a planilha")
+
 }
 
 function openFormByType() {
-  const template = HtmlService.createTemplateFromFile("Inserir-Dados"); // formType = criar.html ou editar.html
-  const html = template.evaluate().setWidth(1600).setHeight(1300);
+  const template = HtmlService.createTemplateFromFile('Inserir-Dados'); // formType = criar.html ou editar.html
+  const html = template.evaluate()
+    .setWidth(1600)
+    .setHeight(1300);
   // SpreadsheetApp.getUi().showModalDialog(html, `Formulário: ${formType}`);
   SpreadsheetApp.getUi().showModalDialog(html, `Formulário: Inserir Dados`);
 }
@@ -59,7 +63,7 @@ function include(filename) {
 
 function getDadosCNPJ(cnpj) {
   try {
-    const cleanCnpj = cnpj.replace(/\D/g, "");
+    const cleanCnpj = cnpj.replace(/\D/g, '');
     const url = "https://minhareceita.org/" + cleanCnpj;
 
     const response = UrlFetchApp.fetch(url);
@@ -69,7 +73,7 @@ function getDadosCNPJ(cnpj) {
 
     const data = JSON.parse(response.getContentText());
     return {
-      razao_contratada: data.razao_social || null,
+      razao_contratada: data.razao_social || null
     };
   } catch (e) {
     Logger.log("Erro de consulta: " + e);
@@ -81,79 +85,68 @@ function getDadosCNPJ(cnpj) {
 // 76.416.890/0001-89    76416890000189 GOV PARANA
 
 function obterUltimoNumSesp() {
-  const sheet =
-    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contratos-2025");
-  const dadosExistentes = sheet
-    .getRange("A2:A")
-    .getValues()
-    .flat()
-    .filter((val) => val);
-  sheet.getRange("J2:J").setNumberFormat("R$ #,##0.00");
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Contratos-2025');
+  const dadosExistentes = sheet.getRange('A2:A').getValues().flat().filter(val => val);
+  sheet.getRange('V2:V').setNumberFormat('R$ #,##0.00');
 
   if (dadosExistentes.length === 0) {
-    return "1"; // Primeiro número
+    return '1'; // Primeiro número
   }
 
   const ultimoValor = String(dadosExistentes[dadosExistentes.length - 1]);
-  const [ultimoNum] = ultimoValor.includes("/")
-    ? ultimoValor.split("/")
-    : [ultimoValor];
+  const [ultimoNum] = ultimoValor.includes('/') ? ultimoValor.split('/') : [ultimoValor];
 
   const proximo = String(parseInt(ultimoNum, 10) + 1);
   return proximo; // Ex: '2'
 }
 
 function salvarDadosNaPlanilha(dados) {
-  const sheet = SpreadsheetApp.getActive().getSheetByName("Contratos-2025");
-  const dadosExistentes = sheet
-    .getRange("A2:A")
-    .getValues()
-    .flat()
-    .filter((val) => val);
-  let novoNumero = "1";
+  const sheet = SpreadsheetApp.getActive().getSheetByName('Contratos-2025');
+  const dadosExistentes = sheet.getRange('A2:A').getValues().flat().filter(val => val);
+  let novoNumero = '1';
 
   if (dadosExistentes.length > 0) {
     const ultimoValor = String(dadosExistentes[dadosExistentes.length - 1]);
-    const [ultimoNum] = ultimoValor.includes("/")
-      ? ultimoValor.split("/")
-      : [ultimoValor];
+    const [ultimoNum] = ultimoValor.includes('/') ? ultimoValor.split('/') : [ultimoValor];
     novoNumero = String(parseInt(ultimoNum, 10) + 1);
   }
 
   const ano = dados.ano || new Date().getFullYear();
-  const num_sesp_formatado = novoNumero.padStart(4, "0") + "/" + ano;
+  const num_sesp_formatado = novoNumero.padStart(4, '0') + '/' + ano;
 
   dados.num_sesp = num_sesp_formatado;
 
   sheet.appendRow([
-    dados.num_sesp || "",
-    dados.e_protocolo || " - ",
-    dados.opt_palavra_chave || " - ",
-    dados.opt_unidade || " - ",
-    dados.opt_subunidade || " - ",
-    dados.opt_responsavel || " - ",
-    dados.num_gms || " - ",
-    dados.num_licitacao || " - ",
-    dados.opt_modal_licitacao || " - ",
-    dados.natureza_desp || " - ",
+    dados.num_sesp || '',
+    dados.e_protocolo || ' - ',
+    dados.opt_palavra_chave || ' - ',
+    dados.opt_unidade || ' - ',
+    dados.opt_subunidade || ' - ',
+    dados.opt_responsavel || ' - ',
+    dados.num_gms || ' - ',
+    dados.num_licitacao || ' - ',
+    dados.opt_modal_licitacao || ' - ',
+    dados.natureza_desp || ' - ',
     // dados.contratada || ' - ',
-    dados.obj_contratacao || " - ",
-    dados.opt_vigencia_mes || " - ",
-    dados.opt_vigencia_ano || " - ",
-    dados.vigencia_inicio || " - ",
-    dados.vigencia_fim || " - ",
-    dados.data_envio || " - ",
-    dados.dotacao || " - ",
-    dados.opt_pncp || " - ",
-    dados.razao_contratada || " - ",
-    dados.cnpj_contratada || " - ",
-    dados.nota_reserva || " - ",
-    dados.valor || " - ",
-  ]);
+    dados.obj_contratacao || ' - ',
+    dados.opt_vigencia_mes || ' - ',
+    dados.opt_vigencia_ano || ' - ',
+    dados.vigencia_inicio || ' - ',
+    dados.vigencia_fim || ' - ',
+    dados.data_envio || ' - ',
+    dados.dotacao || ' - ',
+    dados.opt_pncp || ' - ',
+    dados.razao_contratada || ' - ',
+    dados.cnpj_contratada || ' - ',
+    dados.nota_reserva || ' - ',
+    dados.valor || ' - ',
+  ])
 
-  SpreadsheetApp.getUi().alert("✅ Contrato salvo com sucesso!");
+  SpreadsheetApp.getUi().alert("✅ Contrato salvo com sucesso!")
   return true;
 }
+
 
 /** DADOS: FONTE EXTERNA */
 
@@ -162,24 +155,22 @@ function listarOpcoes() {
   const aba = planilha.getSheetByName(AbaDadosContratos);
 
   return {
-    opt_palavra_chave: getColunaValores(aba, 1), // Coluna A
-    opt_modal_licitacao: getColunaValores(aba, 2), // Coluna B
-    opt_unidade: getColunaValores(aba, 3), // Coluna C
-    opt_subunidade: getColunaValores(aba, 4), // Coluna D
-    opt_pncp: getColunaValores(aba, 5), // Coluna E
-    opt_responsavel: getColunaValores(aba, 6), // Coluna F
-    opt_vigencia_mes: getColunaValores(aba, 7), // Coluna G
-    opt_vigencia_ano: getColunaValores(aba, 8), // Coluna H
+    opt_palavra_chave: getColunaValores(aba, 1),      // Coluna A
+    opt_modal_licitacao: getColunaValores(aba, 2),    // Coluna B
+    opt_unidade: getColunaValores(aba, 3),            // Coluna C
+    opt_subunidade: getColunaValores(aba, 4),         // Coluna D
+    opt_pncp: getColunaValores(aba, 5),               // Coluna E
+    opt_responsavel: getColunaValores(aba, 6),        // Coluna F
+    opt_vigencia_mes: getColunaValores(aba, 7),       // Coluna G
+    opt_vigencia_ano: getColunaValores(aba, 8)        // Coluna H
   };
 }
 
 function getColunaValores(sheet, colunaIndex) {
-  return sheet
-    .getRange(2, colunaIndex, sheet.getLastRow() - 1)
-    .getValues()
-    .flat()
-    .filter(String); // Remove vazios
+  return sheet.getRange(2, colunaIndex, sheet.getLastRow() - 1)
+    .getValues().flat().filter(String); // Remove vazios
 }
+
 
 /** AUXILIARES E CÁLCULOS (UTILITÁRIOS)*/
 
@@ -187,6 +178,7 @@ function showAlert(titulo, msg) {
   var ui = SpreadsheetApp.getUi();
   ui.alert(`🚨 ${titulo}`, `⚠️ ${msg}`, ui.ButtonSet.OK);
 }
+
 
 function fimVigencia(dataInicio, textoVigencia) {
   let inicio;
@@ -248,21 +240,18 @@ function fimVigencia(dataInicio, textoVigencia) {
     // aqui não subtrai dia para ano
   }
 
-  return Utilities.formatDate(fim, Session.getScriptTimeZone(), "yyyy-MM-dd");
+  return Utilities.formatDate(fim, Session.getScriptTimeZone(), 'yyyy-MM-dd');
 }
 
 function parseDataFlex(data) {
   /**
-   * Suporte flexível para string, Date, número (Excel serial), etc.
-   */
-  if (
-    Object.prototype.toString.call(data) === "[object Date]" &&
-    !isNaN(data)
-  ) {
+ * Suporte flexível para string, Date, número (Excel serial), etc.
+ */
+  if (Object.prototype.toString.call(data) === '[object Date]' && !isNaN(data)) {
     return data;
   }
 
-  if (typeof data === "string") {
+  if (typeof data === 'string') {
     // dd/mm/yyyy
     const br = data.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (br) return new Date(`${br[3]}-${br[2]}-${br[1]}`);
@@ -272,7 +261,7 @@ function parseDataFlex(data) {
     if (iso) return new Date(`${iso[1]}-${iso[2]}-${iso[3]}`);
   }
 
-  if (typeof data === "number") {
+  if (typeof data === 'number') {
     // Data no formato Excel (dias desde 30/12/1899)
     const excelBase = new Date(1899, 11, 30);
     excelBase.setDate(excelBase.getDate() + data);
@@ -281,3 +270,10 @@ function parseDataFlex(data) {
 
   return null;
 }
+
+
+
+
+
+
+

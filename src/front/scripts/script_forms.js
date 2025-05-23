@@ -46,11 +46,6 @@ function toggleSecao(ativa) {
   });
 }
 
-// Mostra a seção "pesquisa" por padrão ao carregar
-// window.addEventListener('DOMContentLoaded', () => {
-//   toggleSecao('pesquisa');
-// });
-
 /** ======== FRONTEND FORM FUNCTIONS ======== */
 
 function openForm(typeForm) {
@@ -384,15 +379,83 @@ formularioContratos.addEventListener("reset", () => {
 
 natDespesaInput.addEventListener("input", (e) => {
   const valorOriginal = e.target.value;
-  const valorMascarado = mascararTexto(valorOriginal, "0000.00");
+  const valorMascarado = mascararTexto(valorOriginal);
   e.target.value = valorMascarado;
 });
 
-eProtocoloInput.addEventListener("input", (e) => {
-  const valorOriginal = e.target.value;
-  const valorMascarado = mascararTexto(valorOriginal, "00.000.000-0");
-  e.target.value = valorMascarado;
-});
+// eProtocoloInput.addEventListener('input', e => {
+//   const valorOriginal = e.target.value;
+//   const valorMascarado = mascararTexto(valorOriginal, '00.000.000-0');
+//   e.target.value = valorMascarado;
+// });
+
+// eProtocoloInput.addEventListener('input', e => {
+//   const valorOriginal = e.target.value;
+//   const valorMascarado = mascararTexto(valorOriginal, '00.000.000-0');
+//   e.target.value = valorMascarado;
+// });
+
+// '00.000.000-0'
+// '0000.00'
+function mascararOnInput(idInput, mascara) {
+  const idElement = document.getElementById(idInput);
+  idElement.addEventListener("input", (e) => {
+    const input = e.target.value;
+    const valorMascarado = mascararTexto(input, mascara);
+    e.target.value = valorMascarado;
+  });
+}
+// function mascararOnInputComAno(idInput){
+//     const idElement = document.getElementById(idInput)
+//     idElement.addEventListener('input', e => {
+//     const input =  e.target.value;
+
+//     if(input.includes('/')) {
+//       const [parte1, parte2] = input.split('/');
+//       const num = parte1.replace(/\D/g, '');
+//       const ano = parte2.replace(/\D/g, '').slice(0, 4);
+//       e.target.value =  `${num}/${ano}`;
+//     }
+//       const valorMascarado = mascararTexto(input, mascara );
+//       e.target.value = valorMascarado;
+
+//   })
+// }
+
+function mascararOnInputComAno(idInput) {
+  const idElement = document.getElementById(idInput);
+
+  idElement.addEventListener("input", (e) => {
+    let input = e.target.value;
+
+    // Remove tudo que não é número
+    const apenasNumeros = input.replace(/\D/g, "");
+
+    let numeroParte = "";
+    let anoParte = "";
+
+    if (apenasNumeros.length > 4) {
+      // Se tem mais de 4 dígitos, considera os últimos 4 como ano
+      numeroParte = apenasNumeros
+        .slice(0, apenasNumeros.length - 4)
+        .slice(0, 6);
+      anoParte = apenasNumeros.slice(-4);
+    } else {
+      // Senão, ainda está digitando os primeiros dígitos
+      numeroParte = apenasNumeros.slice(0, 6);
+    }
+
+    // Monta o valor com ou sem o ano
+    e.target.value = anoParte ? `${numeroParte}/${anoParte}` : numeroParte;
+  });
+}
+
+mascararOnInputComAno("num_gms_search");
+mascararOnInputComAno("num_sesp_search");
+
+mascararOnInput("e_protocolo", "00.000.000-0");
+mascararOnInput("e_protocolo_search", "00.000.000-0");
+mascararOnInput("natureza_desp", "0000.00");
 
 function toggleSelects() {
   const btnRadioMes = document.querySelector(
