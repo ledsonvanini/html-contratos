@@ -147,6 +147,126 @@ function salvarDadosNaPlanilha(dados) {
   return true;
 }
 
+// function buscarContratosNaPlanilha(filtros) {
+//   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contratos-2025");
+//   const dados = sheet.getDataRange().getValues(); // todas as linhas
+//   const header = dados.shift();
+
+//   // Assume cabeçalho na primeira linha
+//   const contratos = [];
+
+//   for (let i = 1; i < dados.length; i++) {
+//     const linha = dados[i];
+//     const contrato = {
+//       num_sesp: linha[0],
+//       e_protocolo: linha[1],
+//       palavra_chave: linha[2],
+//       unidade: linha[3],
+//       subunidade: linha[4],
+//       responsavel: linha[5],
+//       num_gms: linha[6],
+//       status: linha[19] || 'Ativo' // ou ajuste conforme posição
+//     };
+
+//     // filtro OR: se qualquer um bater, inclui
+//     if (
+//       (!filtros.num_sesp || contrato.num_sesp.includes(filtros.num_sesp)) &&
+//       (!filtros.e_protocolo || contrato.e_protocolo.includes(filtros.e_protocolo)) &&
+//       (!filtros.num_gms || contrato.num_gms.includes(filtros.num_gms)) &&
+//       (!filtros.responsavel || contrato.responsavel.toLowerCase().includes(filtros.responsavel.toLowerCase()))
+//     ) {
+//       contratos.push(contrato);
+//     }
+//   }
+
+//   return contratos;
+// }
+
+// function buscarContratosNaPlanilha(filtros) {
+//   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Contratos');
+//   const dados = sheet.getDataRange().getValues();
+//   const header = dados.shift();
+
+//   const idx = {
+//     num_sesp: header.indexOf('num_sesp'),
+//     e_protocolo: header.indexOf('e_protocolo'),
+//     num_gms: header.indexOf('num_gms'),
+//     responsavel: header.indexOf('opt_responsavel')
+//   };
+
+//   const normalizar = texto =>
+//     String(texto || '')
+//       .normalize('NFD')
+//       .replace(/\p{Diacritic}/gu, '')
+//       .toLowerCase()
+//       .trim();
+
+//   const resultados = dados.filter(linha => {
+//     const condicoes = [];
+
+//     if (filtros.num_sesp) {
+//       const valor = normalizar(linha[idx.num_sesp]);
+//       condicoes.push(valor.includes(normalizar(filtros.num_sesp)));
+//     }
+//     if (filtros.e_protocolo) {
+//       const valor = normalizar(linha[idx.e_protocolo]);
+//       condicoes.push(valor.includes(normalizar(filtros.e_protocolo)));
+//     }
+//     if (filtros.num_gms) {
+//       const valor = normalizar(linha[idx.num_gms]);
+//       condicoes.push(valor.includes(normalizar(filtros.num_gms)));
+//     }
+//     if (filtros.responsavel) {
+//       const valor = normalizar(linha[idx.responsavel]);
+//       condicoes.push(valor === normalizar(filtros.responsavel));
+//     }
+
+//     return condicoes.length > 0 && condicoes.every(Boolean);
+//   });
+
+//   return resultados;
+// }
+
+function buscarContratosNaPlanilha(filtros) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contratos-2025");
+  const dados = sheet.getDataRange().getValues(); 
+  const header = dados.shift();
+
+  const normalizar = (valor) => String(valor || "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .trim();
+
+  const contratos = [];
+
+  for (let linha of dados) {
+    const contrato = {
+      num_sesp: linha[0],
+      e_protocolo: linha[1],
+      palavra_chave: linha[2],
+      unidade: linha[3],
+      subunidade: linha[4],
+      responsavel: linha[5],
+      num_gms: linha[6],
+      status: linha[19] || 'Ativo'
+    };
+
+    const match =
+      (filtros.num_sesp && normalizar(contrato.num_sesp).includes(normalizar(filtros.num_sesp))) ||
+      (filtros.e_protocolo && normalizar(contrato.e_protocolo).includes(normalizar(filtros.e_protocolo))) ||
+      (filtros.num_gms && normalizar(contrato.num_gms).includes(normalizar(filtros.num_gms))) ||
+      (filtros.responsavel && normalizar(contrato.responsavel).includes(normalizar(filtros.responsavel)));
+
+    if (match) {
+      contratos.push(contrato);
+    }
+  }
+
+  return contratos;
+}
+
+
 
 /** DADOS: FONTE EXTERNA */
 
@@ -161,6 +281,7 @@ function listarOpcoes() {
     opt_subunidade: getColunaValores(aba, 4),         // Coluna D
     opt_pncp: getColunaValores(aba, 5),               // Coluna E
     opt_responsavel: getColunaValores(aba, 6),        // Coluna F
+    opt_responsavel_search: getColunaValores(aba, 6),        // Coluna F
     opt_vigencia_mes: getColunaValores(aba, 7),       // Coluna G
     opt_vigencia_ano: getColunaValores(aba, 8)        // Coluna H
   };

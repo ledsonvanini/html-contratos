@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <base target="_top" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="./src/front/scripts/script_forms.js"></script>
+  
+  <head>
+    <base target="_top" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="./src/front/scripts/script_forms.js"></script>
   <link rel="icon" type="image/x-icon" href="https://web.celepar.pr.gov.br/drupal/images/logo_parana_400x173.png" />
 
   <style>
@@ -172,7 +172,7 @@
       <button
       id="toggle-pesquisa"
       onclick="toggleSecao('pesquisa')"
-      class="w-full flex rounded-lg items-center text-[var(--blue-02)] justify-between px-4 py-2 bg-slate-100/60    transition cursor-pointer"
+      class="w-full flex rounded-lg items-center text-[var(--blue-02)] justify-between px-4 py-2 bg-slate-100/60  transition cursor-pointer"
     >
       <span class="flex gap-2 text-left font-medium">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -188,62 +188,65 @@
       </span>
     </button>
 
-      <div id="secao-pesquisa" class="overflow-hidden transition-all duration-500 max-h-0 px-4">
-        
-        <!-- conteúdo da pesquisa aqui -->
-        <div class="py-4">
-          <div class="flex items-center p-4 w-full border-1  border-gray-100 rounded-xl">
-            <div class="flex w-full gap-4 rounded-xl">
-              <div class="flex gap-2">
-                <div class="flex flex-col gap-1">
-                  <label for="num_sesp" class="active label-input">Nº SESP</label>
-                  <input type="text" id="num_sesp_search" name="num_sesp_search" required />
-                </div>           
-              </div>
+      <div id="secao-pesquisa" class="flex flex-col overflow-hidden transition-all duration-500 max-h-0 px-4">
 
-              <div class="flex flex-col gap-1">
-                <label for="e_protocolo_search" class="active label-input"
+        <!-- conteúdo da pesquisa aqui -->
+        <form id="form_pesquisa" class="form_pesquisa">
+          <div class="py-4">
+            <div class="flex items-center p-4 w-full border-1  border-gray-100 rounded-xl">
+              <div class="flex w-full gap-4 rounded-xl">
+                <div class="flex gap-2">
+                  <div class="flex flex-col gap-1">
+                    <label for="num_sesp_search" class="active label-input">Nº SESP</label>
+                    <input type="text" id="num_sesp_search" name="num_sesp_search" required />
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="e_protocolo_search" class="active label-input"
               >e-PROTOCOLO</label>
-                <input
+                  <input
               type="text"
               id="e_protocolo_search"
               name="e_protocolo_search"
               placeholder="00.000.000-0"
               required
             />
-              </div>
+                </div>
 
-              <div class="flex gap-2">
-                <div class="flex flex-col gap-1">
-                  <label for="num_gms_search" class="active label-input">Nº GMS</label>
-                  <input
+                <div class="flex gap-2">
+                  <div class="flex flex-col gap-1">
+                    <label for="num_gms_search" class="active label-input">Nº GMS</label>
+                    <input
                 type="text"
                 id="num_gms_search"
-                name="num_gms_search"               
+                name="num_gms_search"
                 required
               />
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="opt_responsavel_search" class="active label-input"
+              >RESPONSÁVEL</label>
+                  <select name="opt_responsavel_search" id="opt_responsavel_search">
+              <option>Carregando dados...</option>
+            </select>
                 </div>
               </div>
 
-              <div class="flex flex-col gap-1">
-                <label for="opt_responsavel_search" class="active label-input"
-              >RESPONSÁVEL</label>
-                <select id="opt_responsavel_search">
-              <option>Carregando dados...</option>
-            </select>
+              <div class="button mt-5 button-blue00 flex justify-center items-center gap-3">
+                <button type="button" id="btn_menu_find" onclick="pesquisarContrato();">Pesquisar</button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
               </div>
             </div>
-
-            <div class="button mt-5 button-blue00 flex justify-center items-center gap-3">
-              <input type="button" id="btn_menu_find" value="Pesquisar" />
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-            </div>
           </div>
-        </div>
+        </form>
+        <div id="resultado_pesquisa" class="mt-4"></div>
       </div>
     </div>
 
@@ -672,7 +675,7 @@
 
 
     </div>
-    <!-- <?!= include('script-forms');?> -->
+    <?!= include('script-forms');?>
 </body>
 
 </html>
