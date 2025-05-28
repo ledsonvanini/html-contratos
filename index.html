@@ -3,8 +3,8 @@
   
   <head>
     <base target="_top" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="./src/front/scripts/script_forms.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="icon" type="image/x-icon" href="https://web.celepar.pr.gov.br/drupal/images/logo_parana_400x173.png" />
 
   <style>
@@ -188,13 +188,13 @@
       </span>
     </button>
 
-      <div id="secao-pesquisa" class="flex flex-col overflow-hidden transition-all duration-500 max-h-0 px-4">
+      <div id="secao-pesquisa" class="flex flex-col gap-3 overflow-hidden transition-all duration-500 max-h-0 px-4">
 
         <!-- conteúdo da pesquisa aqui -->
         <form id="form_pesquisa" class="form_pesquisa">
           <div class="py-4">
-            <div class="flex items-center p-4 w-full border-1  border-gray-100 rounded-xl">
-              <div class="flex w-full gap-4 rounded-xl">
+            <div class="flex items-center p-4 w-full border-1 gap-3 border-gray-100 rounded-xl">
+              <div class="flex w-full gap-3 rounded-xl">
                 <div class="flex gap-2">
                   <div class="flex flex-col gap-1">
                     <label for="num_sesp_search" class="active label-input">Nº SESP</label>
@@ -212,6 +212,13 @@
               placeholder="00.000.000-0"
               required
             />
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label for="opt_palavra_chave_search" class="active label-input"
+                >PALAVRA-CHAVE</label>
+                  <select name="opt_palavra_chave_search" id="opt_palavra_chave_search">
+                <option>Carregando dados...</option>
+              </select>
                 </div>
 
                 <div class="flex gap-2">
@@ -235,14 +242,16 @@
                 </div>
               </div>
 
-              <div class="button mt-5 button-blue00 flex justify-center items-center gap-3">
-                <button type="button" id="btn_menu_find" onclick="pesquisarContrato();">Pesquisar</button>
+              <!-- <div class="button mt-5 button-blue00 flex justify-center items-center gap-3"> -->
+                <button class="button mt-5 button-blue00 flex justify-center items-center gap-3" type="button" id="btn_menu_find" onclick="pesquisarContrato();">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="size-6">
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
-              </div>
+                  Pesquisar
+                </button>
+              <!-- </div> -->
             </div>
           </div>
         </form>
